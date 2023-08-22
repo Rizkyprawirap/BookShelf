@@ -1,4 +1,3 @@
-const { default: mongoose } = require('mongoose');
 const BookModel = require('../model/book.model');
 
 async function insertBook(bookObj) {
@@ -12,7 +11,6 @@ async function insertBook(bookObj) {
     }
 
     const createdBook = new BookModel(bookObj);
-
     const savedBook = await createdBook.save();
 
     return savedBook;
@@ -29,16 +27,10 @@ async function updateBook(id, bookObj) {
     const updatedBook = await BookModel.findById(id)
     
     Object.assign(updatedBook, bookObj);
-
-    // Save the updated book object
     const savedBook = await updatedBook.save();
-
-    console.log(savedBook);
 
     return savedBook;
 }
-
-
 
 async function getBooks() {
     return await BookModel.find({}).select("id bookName publisher")
@@ -53,11 +45,4 @@ async function deleteBook(id) {
     return await BookModel.findByIdAndDelete(id)
 }
 
-
 module.exports = { insertBook, getBooks, getBookById, deleteBook, updateBook};
-
-// const updatedBook = await BookModel.findByIdAndUpdate(
-//     id,
-//     {$set: bookObj},
-//     { new: true }
-// );
